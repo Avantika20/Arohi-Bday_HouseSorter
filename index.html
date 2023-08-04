@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arohi's Birthday House Sorter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    /* ... Styles as provided ... */
+
+    /* Additional styles for Reset button */
+    #resetButton {
+        margin-top: 10px;
+        margin-left: 260px;
+        width: auto;
+        height: 30px;
+        background-color: #ff4000;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 15px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div id="container">
+        <h1>Arohi's Birthday House Sorter</h1><br><br>
+        <div>
+            <label for="friendName">Enter your name:</label><br>
+            <input type="text" id="friendName" placeholder="Your name..."><br>
+            <input type="button" id="submitButton" value="Find My Group" onclick="findGroup()"><br>
+        </div>
+<br>
+        <!-- Reset Button -->
+        <input type="button" id="resetButton" value="Reset" onclick="resetPage()"><br>
+        <div id="result"></div>
+    </div>
+
+    
+
+    <!-- Popup Congrats Box -->
+    <div id="popup" class="popup">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <div class="popup-content">
+            <h2>Congratulations!</h2>
+            <p>You are assigned to the <span id="houseName"></span> house.</p>
+        </div>
+    </div>
+
+    <script>
+         function findGroup() {
+            const friendName = document.getElementById("friendName").value;
+            let group;
+            let colorTheme;
+
+            if (friendName === "Megha" || friendName === "Anika" || friendName === "Akshaya") {
+                group = "Scarlet";
+                colorTheme = "#ff6b6b"; // Scarlet
+            } else if (friendName === "Shreya" || friendName === "Avantika" || friendName === "Prasansha") {
+                group = "Gold";
+                colorTheme = "#ccac00"; // Gold
+            } else if (friendName === "Ridhima" || friendName === "Aayushi" || friendName === "Averi") {
+                group = "Royal";
+                colorTheme = "#4169e1"; // Royal Blue
+            } else if (friendName === "Sharang" || friendName === "Arunoday" || friendName === "Amrit") {
+                group = "Emerald";
+                colorTheme = "#2ecc71"; // Emerald Green
+            } else {
+                group = "ERROR!!";
+                colorTheme = "#d296ba"; // Default button color
+            }
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `<p><strong>${friendName}</strong>, you are assigned to the "${group}" group.</p>`;
+            document.body.style.backgroundColor = colorTheme;
+            showPopup(group);
+            changeButtonColor(colorTheme);
+            showConfetti();
+        }
+
+        function showPopup(house) {
+            const popup = document.getElementById("popup");
+            const houseNameSpan = document.getElementById("houseName");
+            houseNameSpan.textContent = house;
+            popup.style.display = "block";
+        }
+
+        function closePopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+
+        function changeButtonColor(color) {
+            const submitButton = document.getElementById("submitButton");
+            submitButton.style.backgroundColor = color;
+            const resetButton = document.getElementById("resetButton");
+            resetButton.style.backgroundColor = color;
+        }
+        // ... JavaScript code as provided ...
+
+        function resetPage() {
+            document.getElementById("friendName").value = "";
+            document.getElementById("submitButton").style.backgroundColor = "#007bff"; // Re-enable the Find My Group button
+            document.body.style.backgroundColor = "#f7f7f7";
+            document.getElementById("result").innerHTML = "";
+            resetButtonColor();
+        }
+
+        function resetButtonColor() {
+            const resetButton = document.getElementById("resetButton");
+            resetButton.style.backgroundColor = "#ff4000"; // Default button color
+        }
+
+        function showConfetti() {
+            const confettiSettings = { target: "confetti-container", respawn: true };
+            const confetti = new ConfettiGenerator(confettiSettings);
+            confetti.render();
+
+            setTimeout(function () {
+                confetti.clear();
+            }, 3000); // Clear the confetti after 3 seconds
+        }
+    </script>
+    <script src="confetti.js"></script>
+</body>
+
+</html>
